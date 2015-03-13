@@ -1,0 +1,118 @@
+<html>
+    <head>
+        <style type="text/css">
+            body {
+                font-family: sans-serif;
+            }
+            h1 {
+                text-decoration: underline;
+            }
+            h2 {
+                text-decoration: underline;
+            }
+            h3 {
+                font-style: italic;
+            }
+            ol {
+            	margin-top: 0px;
+            	margin-bottom: 0px;
+            }
+        </style>
+    </head>
+    <body>
+    	<ol>
+    		<li><a href="dice">Dice</a></li>
+    		<li><a href="console">Console</a><ol>
+    			<li><a href="navigation">Navigation</a></li>
+    			<li><a href="rollcommand">The Roll Command</a></li>
+    			<li><a href="modifications">Modifications</a><ol>
+    				<li><a href="largest">Largest</a></li>
+    				<li><a href="maximum">Maximum</a></li>
+    				<li><a href="least">Least</a></li>
+    				<li><a href="minimum">Minimum</a></li>
+    				<li><a href="exploding">Exploding</a></li>
+    			</ol></li>	
+    			<li><a href="customdie">Custom-sided Die</a><ol>
+    				<li><a href="fudgedie">Fudge Die</a></li>
+    			</ol></li>	
+    			<li><a href="statcommand">The Stat Command</a></li>
+    			<li><a href="printcommand">The Print Command</a></li>
+    		</ol></li>
+    		<li><a href="saves">Saves</a><ol>
+    			<li><a href="adddialog">The Add Dialog</a></li>
+    			<li><a href="savedcommands">Saved Commands</a></li>
+    			<li><a href="registeredexpressions">Registered Expressions</a></li>
+    		</ol></li>
+    		<li><a href="statistics">Statistics</a></li>
+    	</ol>
+        <h1><a name="dice">Dice</a></h1>
+        <p>Click the button to roll those dice - it's that easy!</p>
+        <h1><a name="console">Console</a></h1>
+        <h2><a name="navigation">Navigation</a></h2>
+        <p>It is possible to navigate the last 10 entered commands with help from the 'up' and 'down' cursor keys.</p>
+        <h2><a name="rollcommand">The Roll Command</a></h2>
+        <p>Type '_rollCommandKeyword 1_standardDiceDivider6' to roll a 6-sided die.</p>
+        <p>The roll command always starts with '_rollCommandKeyword' followed by an expression or a connected expression, e.g. '_rollCommandKeyword 1_standardDiceDivider6'. This can abbreviated to '_rollCommandKeywordShort', e.g. '_rollCommandKeywordShort 1_standardDiceDivider6', or can be completely ignored, if no other command is used.</p>
+        <p><a name="expressions"></a>An expression can either be a constant expression or a dice roll expression. A constant expression consists simply of a number. A dice roll expression consists of '[times to roll the die]_standardDiceDivider[sides of the die]', e.g. '2_standardDiceDivider8' to roll a 8-sided die twice and add the results together. '1_standardDiceDivider[sides]' can be abbreviated to '_standardDiceDivider[sides]', e.g. '_standardDiceDivider6'.</p>
+        <p>Expressions can be connected by '+', '-', '*' and '/' to add, subtract, multiply or divide the following expression respectively. This connection only extends to the expression right after it, e.g. 'r 1_standardDiceDivider8-1_standardDiceDivider4+2' will roll a 8-sided die, subtract the roll of a 4-sided die and add 2 to the total. To bypass this you can put expressions or connected expressions in parentheses, e.g. 'r 1_standardDiceDivider8-(1_standardDiceDivider4+2)' will roll a 8-side and subtract the total of the roll of a 4-sided die plus 2.</p>
+        <p>Every space in the expressions part (as in: after the '_rollCommandKeyword ' command) does not interfere with the computing, e.g. the expression '1_standardDiceDivider8 - 2_standardDiceDivider4+2' is equal to '1 _standardDiceDivider8- 2 _standardDiceDivider4 +2'.</p>
+        <h2><a name="modifications">Modifications</a></h2>
+        <p>Dice roll expressions can be further altered by modifications. There are 5 different modifications to a Dice Roll Expression, of which 2 pairs behave similar.</p>
+        <h3><a name="largest">Largest</a></h3>
+        <p>Usage: '_largestModificationKeyword {modifier} {times}_standardDiceDivider{sides}'<br>Example: '_largestModificationKeyword 3 4_standardDiceDivider6'</p>
+        <p>Selects the {modifier} largest values determined by {times} rolls of a {sides}-sided die and adds them together. The examples selects the 3 largest value rolled by 4_standardDiceDivider6, thus rolls of 4, 3, 2 and 5 would result in 4, 3 and 5 being selected and added together to 12.</p>
+        <h3><a name="maximum">Maximum</a></h3>
+        <p>Usage: '_maxModificationKeyword {times}_standardDiceDivider{sides}'<br>Example: '_maxModificationKeyword 4_standardDiceDivider6'</p>
+        <p>Behaves similar to largest, as it selects the (1) largest - the maximum - value determined by {times} rolls of a {sides}-sided die. The examples selects the 3 largest value rolled by 4d6, thus rolls of 4, 3, 2 and 5 would result in 5 being selected.</p>
+        <h3><a name="least">Least</a></h3>
+        <p>Usage: '_leastModificationKeyword {modifier} {times}_standardDiceDivider{sides}'<br>Example: '_leastModificationKeyword 3 4_standardDiceDivider6'</p>
+        <p>Selects the {modifier} least values determined by {times} rolls of a {sides}-sided die and adds them together. The examples selects the 3 least value rolled by 4_standardDiceDivider6, thus rolls of 4, 3, 2 and 5 would result in 4, 3 and 2 being selected and added together to 9.</p>
+        <h3><a name="minimum">Minimum</a></h3>
+        <p>Usage: '_minModificationKeyword {times}_standardDiceDivider{sides}'<br>Example: '_minModificationKeyword 4_standardDiceDivider6'</p>
+        <p>Behaves similar to least, as it selects the (1) least - the minimum- value determined by {times} rolls of a {sides}-sided die. The examples selects the 3 largest value rolled by 4d6, thus rolls of 4, 3, 2 and 5 would result in 2 being selected.</p>
+        <h3><a name="exploding">Exploding</a></h3>
+        <p>Usage: '_explodingModificationKeyword {modifier} {times}_standardDiceDivider{sides}'<br>Example: '_explodingModificationKeyword 5 4_standardDiceDivider6' or '_explodingModificationKeyword 4_standardDiceDivider6'</p>
+        <p>Rolls a {sides}-sided die {times} times. If any of the rolled values is at least {modifier} a {sides}-sided die gets rolled again. This rule also extends to the additional roll, thus if the additional roll is at least {modifier}, another additional die gets rolled. If no {modifier} is given it defaults to {sides}, so the die gets rolled again, if its rolled value is its maximal possible value. The first example rolls 4_standardDiceDivider6 and explodes them on at least 5, thus rolls of 4, 6, 2 and 5 would result in two (5 and 6 are at least 5) additional dice being rolled. The second example rolls 4_standardDiceDivider6 and explodes them on at least 6 (the sides of the die, as no modifier was given), thus rolls of 4, 6, 2 and 5 would result in one additional die being rolled.</p>
+        <h2><a name="customdie">Custom-sided die</a></h2>
+        <p>Dice roll expressions can also instead be altered with custom sides. This allows dice to have non-consecutive side values.</p>
+        <p>Usage: '{times}_standardDiceDivider_customStartKeyword{customside1}_customSeparatorKeyword{customside2}[_customSeparatorKeyword...]_customEndKeyword'<br>Example: '5_standardDiceDivider_customStartKeyword1_customSeparatorKeyword3_customSeparatorKeyword5_customEndKeyword' or '_standardDiceDivider_customStartKeyword2.5_customSeparatorKeyword5.5_customSeparatorKeyword3.7_customSeparatorKeyword4.1_customEndKeyword'</p>
+        <p>The first example would roll 5 3-sided dice, with the individual values of the side being 1, 3 and 5. The second example would roll 1 4-sided die, with the individual values of the side being 2.5, 5.5, 3.7 and 4.1.</p>
+        <p>If the custom die needs to be filled with successive whole numbers the keyword 'to' can be used, e.g. '_standardDiceDivider_customStartKeyword-2_customValueScopeKeyword2_customEndKeyword' is equal to '_standardDiceDivider_customStartKeyword-2_customSeparatorKeyword-1_customSeparatorKeyword0_customSeparatorKeyword1_customSeparatorKeyword2_customEndKeyword'. This can be freely used with other individual values, e.g. '_standardDiceDivider_customStartKeyword1_customValueScopeKeyword5_customSeparatorKeyword7_customSeparatorKeyword9_customEndKeyword', or with other scopes, e.g. '_standardDiceDivider_customStartKeyword1_customValueScopeKeyword3_customSeparatorKeyword5_customValueScopeKeyword7_customEndKeyword'.
+        <p>Custom die can't be used in conjunction with modifications!</p> 
+        <h3><a name="fudgedie">Fudge die</a></h3>
+        <p>A fudge die (a die with the sides -1, 0 and +1) is already built into DiceRoller2. It can be accessed by '{times}_standardDiceDividerf', e.g. '5_standardDiceDividerf' would roll 5 fudge dice, which can result to values between -5 to +5.
+        <h2><a name="statcommand">The Stat Command</a></h2>
+        <p>Type '_statCommandKeyword 50_standardDiceDivider6' to show statistics for the rolls of 50 6-sided dice.</p>
+        <p>The stat command always starts with '_statCommandKeyword' followed by an <a href="expressions">expression</a> or a connected expression, e.g. '_statCommandKeyword 50d6'. This can abbreviated to '_statCommandKeywordShort', e.g. '_statCommandKeywordShort 50_standardDiceDivider6'.</p>
+        <p>The expressions for the stat command follow similar rules to the roll command expressions, with some exceptions:</p>
+        <ol>
+            <li>Constant expressions behave mostly equal to rolled values, i.e. '_statCommandKeyword 10_standardDiceDivider6 + 6' would always result in statistics with at least 1 rolled 6 and maximal 11 rolled 6s.</li>
+            <li>Similar + can be also used to add occurrences of other collections to the collection, i.e. '_statCommandKeyword 3_standardDiceDivider6 + 2_standardDiceDivider8' would result in statistics of 0 to 5 for the values 1 to 6 and statistics of 0 to 2 for the values 7 and 8.</li>
+            <li>- can be used to remove occurrences from the collection, i.e. '_statCommandKeyword 10_standardDiceDivider6 - 6' would always result in statistics with 1 less 6 rolled, to the extend where it is possible to roll -1 6s. '_statCommandKeyword 5_standardDiceDivider6 - 5_standardDiceDivider6' would result in statistics from -5 to +5 for each value.</li>
+            <li>* can be used to give occurrences a magnitude, i.e. '_statCommandKeyword 2_standardDiceDivider6 * 5' would result in a statistic of 5 for 2 values or 10 for 1 value. One side of the * must be a constant expression.</li>
+            <li>/ can't be used to connect expressions</li>
+        </ol>
+        <p>It is also possible to use modifications and custom-sided dice for dice expressions without limits. For modifications, only the selected values will go into the statistic.</p>
+        <h2><a name="printcommand">The Print Command</a></h2>
+        <p>Type '_printCommandKeyword "Sum of 2 normal dice: " 2_standardDiceDivider6' to output 'Sum of 2 normal dice: x' where x is any number between 2 and 12 (All possible values the expression '2_standardDiceDivider6' can produce).</p>
+        <p>The print command always starts with '_printCommandKeyword' followed by any combination of literals and commands, e.g. '_printCommandKeyword "literal1" 2_standardDiceDivider6 "literal2"'. This can abbreviated to '_printCommandKeywordShort', e.g. '_printCommandKeywordShort "literal1" 2_standardDiceDivider6 "literal2"'. All commands can be used.</p>
+        <p>The literals are output as they are input, with the exception of '_printNewLineReplace', which can be used in a literal to produce a new line, e.g. '_printCommandKeyword "STR: " 3_standardDiceDivider6 "_printNewLineReplaceDEX: " 3_standardDiceDivider6' Only the final values of the commands will be output, i.e. the rolled values and the way they are connected won't be output.</p>
+        <h1><a name="saves">Saves</a></h1>
+        <p>Here it’s possible to save often used commands or register expressions so they can be accessed more easily.</p>
+		<p>The “Save XML” button can be used to save the currently saved commands and registered expressions to a XML-document. The “Load XML” button can be used to load such an XML-document and add all the contained data to the current data.</p>
+		<p>The “Add” button can be used to save a command or register an expression. The “Edit” and “Remove” buttons can be used to edit or remove the selected commands or expressions. Removed commands or expression won’t be saved and can’t be accessed anymore.</p>
+		<p>The “Do” button is only available for saved commands and will execute the selected command. This can also be achieved by double clicking the command in the list.</p>
+        <h2><a name="adddialog">The Add Dialog</a></h2>
+        <p>Enter the name of the new expression or saved command in the textfield next to “Name:”. Enter the new expression or saved command itself in the textfield next to “Expression:”. The “Save” button can be used to save the command or register the expression and close the dialog. If you entered a non valid command or expression the expression will appear red. The “Cancel” button can be used to close the dialog.</p>
+        <h2><a name="savedcommands">Saved Commands</a></h2>
+        <p>Saved commands are console commands that are saved under a specific name. All console commands are usable. Their usage is the same as in the console. Saved commands can only be accessed in their list in the window “Saves”.</p>
+		<p>A new window will inherit the saved commands of it’s parent window.</p>
+        <h2><a name="registeredexpressions">Registered Expressions</a></h2>
+        <p>Registered expressions are dice expressions that are saved under a specific name, so they can be accessed as any other dice expression. Anytime you can use a dice expression in a command, you can use the name of a registered expression instead to use this specific expression instead.</p>
+		<p>Registered expressions are shared between all windows.</p>
+        <h1><a name="statistics">Statistics</a></h1>
+        <p>Here it is possible to easily generate multiple statistics in a splitted layout.</p>
+		<p>Enter values into the textfields to determine how many dice should be rolled and how many sides those dice should have. Use the button “Generate” to roll those dice and generate the statistics.</p>
+		<p>Use the checkbox “Show History” to show or hide the statistics history.</p>
+    </body>
+</html>
