@@ -42,6 +42,10 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.LinkedList;
 import java.util.ListIterator;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class PnlConsole extends JPanel {
 
@@ -57,10 +61,18 @@ public class PnlConsole extends JPanel {
 	private String lastInputString = "";
 	private boolean lastKeyWasEnter = false;
 	
+	private boolean inputDoubleClickAccessEnabled = false;
+	
 	/**
 	 * Creates a new 
 	 */
 	public PnlConsole() {
+		addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				requestInputFocus();
+			}
+		});
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLayout(new BorderLayout(5, 5));
 		
@@ -79,16 +91,24 @@ public class PnlConsole extends JPanel {
 		add(scrollPane, BorderLayout.CENTER);
 		
 		tpConsole = new JTextPane();
+		tpConsole.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (inputDoubleClickAccessEnabled && e.getButton() == MouseEvent.BUTTON1 && e.getClickCount() > 1) {
+					e.consume();
+					requestInputFocus();
+				}
+			}
+		});
 		tpConsole.setRequestFocusEnabled(false);
 		tpConsole.setEditable(false);
 		tpConsole.setAutoscrolls(true);
 		scrollPane.setViewportView(tpConsole);
 	}
 	
-	@Override
-	public void validate() {
-		super.validate();
+	private void requestInputFocus() {
 		txtInput.requestFocusInWindow();
+		txtInput.setCaretPosition(txtInput.getDocument().getLength());
 	}
 	
 	private void detectInput(KeyEvent evt) {
@@ -152,6 +172,25 @@ public class PnlConsole extends JPanel {
 			enteredCommandsList.addFirst(s);
 			currentCommandIterator = enteredCommandsList.listIterator();
 		}
+	}
+
+	/**
+	 * @return the inputDoubleClickAccessEnabled
+	 */
+	public boolean isInputDoubleClickAccessEnabled() {
+		return inputDoubleClickAccessEnabled;
+	}
+
+	/**
+	 * @param inputDoubleClickAccessEnabled the inputDoubleClickAccessEnabled to set
+	 */
+	public void setInputDoubleClickAccessEnabled(
+			boolean inputDoubleClickAccessEnabled) {
+		this.inputDoubleClickAccessEnabled = inputDoubleClickAccessEnabled;
+	}
+	
+	public void doLastCommand() {
+		UtilFunction.appendToText(tpConsole, Main.parseCommand(lastInputString));
 	}
 
 }

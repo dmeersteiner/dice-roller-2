@@ -182,6 +182,7 @@ public class Mainframe extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				setContentPane(pnlConsole);
 				validate();
+				pnlConsole.requestFocusInWindow();
 			}
 		});
 		mnFenster.add(mitConsole);
