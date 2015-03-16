@@ -1,6 +1,6 @@
 /*******************************************************************************
  *  Dice Roller 2 is a tabletop rpg dice roll utility tool
- *     Copyright (C) 2014, 2015 David Meersteiner
+ *     Copyright (C) 2014 David Meersteiner
  *
  *     This program is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU General Public License as published by
@@ -14,15 +14,6 @@
  *
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *     
- *     Contact me under:
- *     
- *     dmeersteiner@gmail.com
- *     
- *     David Meersteiner
- *     Am Hang 10
- *     94253 Bischofsmais
- *     GERMANY
  *******************************************************************************/
 package de.dm.dr2.data.util;
 
@@ -95,6 +86,14 @@ public class Constants {
 	 * Introduces the register list command. Used by the {@linkplain ConsoleParser}.
 	 */
 	public static String _registerListCommandKeywordShort = "regl";
+	/**
+	 * Introduces the register list command. Used by the {@linkplain ConsoleParser}.
+	 */
+	public static String _testCommandKeyword = "test";
+	/**
+	 * Introduces the register list command. Used by the {@linkplain ConsoleParser}.
+	 */
+	public static String _testCommandKeywordShort = "test";
 	/**
 	 * This String in a message will be replaced with a new line.
 	 * Used by the {@linkplain ConsoleParser#parsePrint(String)}.

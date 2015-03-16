@@ -1,6 +1,6 @@
 /*******************************************************************************
  *  Dice Roller 2 is a tabletop rpg dice roll utility tool
- *     Copyright (C) 2014, 2015 David Meersteiner
+ *     Copyright (C) 2014 David Meersteiner
  *
  *     This program is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU General Public License as published by
@@ -14,15 +14,6 @@
  *
  *     You should have received a copy of the GNU General Public License
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *     
- *     Contact me under:
- *     
- *     dmeersteiner@gmail.com
- *     
- *     David Meersteiner
- *     Am Hang 10
- *     94253 Bischofsmais
- *     GERMANY
  *******************************************************************************/
 package de.dm.dr2.data.parser;
 
@@ -74,6 +65,11 @@ public abstract class ConsoleParser {
 			substring = UtilFunction.stringAfter(stringToParse, Constants._rollCommandKeywordShort);
 			if (substring != null) {
 				return parseRoll(substring.toLowerCase());
+			}
+			
+			String[] testSubstings = detectTestSubstrings(stringToParse);
+			if (testSubstings != null) {
+				
 			}
 			
 			substring = UtilFunction.stringAfter(stringToParse, Constants._statCommandKeyword);
@@ -140,6 +136,21 @@ public abstract class ConsoleParser {
 	 */
 	public static DiceRollMessage parseRoll(String stringToParse) throws ParseException {
 		return new DiceRollMessage(DiceExpressionParser.parse(stringToParse));
+	} 
+	
+	private static String[] detectTestSubstrings(String stringToParse) throws ParseException {
+		stringToParse = stringToParse.toLowerCase();
+		if (stringToParse.contains(" "+Constants._testCommandKeyword+" ")) {
+			return stringToParse.split(" "+Constants._testCommandKeyword+" ", 2);
+		} else if (stringToParse.contains(" "+Constants._testCommandKeyword+" ")) {
+			return stringToParse.split(" "+Constants._testCommandKeywordShort+" ", 2);
+		}
+		return null;
+	}
+	
+	public static TestMessage parseTest(String[] substrings) throws ParseException {
+		return new TestMessage(DiceExpressionParser.parse(substrings[0]),
+				DiceExpressionParser.parse(substrings[1]));
 	}
 	
 	/**
