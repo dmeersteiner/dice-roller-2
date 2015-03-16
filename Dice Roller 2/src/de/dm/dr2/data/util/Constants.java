@@ -93,7 +93,7 @@ public class Constants {
 	/**
 	 * Introduces the register list command. Used by the {@linkplain ConsoleParser}.
 	 */
-	public static String _testCommandKeywordShort = "test";
+	public static String _testCommandKeywordShort = "t";
 	/**
 	 * This String in a message will be replaced with a new line.
 	 * Used by the {@linkplain ConsoleParser#parsePrint(String)}.
