@@ -14,22 +14,21 @@ public class TestMessage extends ConsoleMessage {
 		RollReturn firstReturn = first.roll();
 		RollReturn secondReturn = second.roll();
 		double trueValue = firstReturn.getValue()-secondReturn.getValue();
-		if (trueValue >= 0) {
-			value = UtilFunction.doubleToStringWithMinimumPrecision(trueValue)+" under"; 
+		if (trueValue > 0) {
+			value = UtilFunction.doubleToStringWithMinimumPrecision(trueValue)+" over"; 
+		} else if (trueValue == 0) {
+			value = "equal";
 		} else {
-			value = UtilFunction.doubleToStringWithMinimumPrecision(trueValue)+" over";
+			value = UtilFunction.doubleToStringWithMinimumPrecision(-trueValue)+" under";
 		}
 		
 		message = "Testing "+first.toString()+" against "+second.toString()+":"
 				+Constants.NEW_LINE
 				+firstReturn.getMessage()
-				+Constants.NEW_LINE
 				+" against "
-				+Constants.NEW_LINE
 				+secondReturn.getMessage()
 				+Constants.NEW_LINE
-				+" = "
-				+value
+				+"is "+value
 				+Constants.NEW_LINE+Constants.NEW_LINE;
 	}
 	

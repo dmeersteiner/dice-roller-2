@@ -69,7 +69,7 @@ public abstract class ConsoleParser {
 			
 			String[] testSubstings = detectTestSubstrings(stringToParse);
 			if (testSubstings != null) {
-				
+				return parseTest(testSubstings);
 			}
 			
 			substring = UtilFunction.stringAfter(stringToParse, Constants._statCommandKeyword);
@@ -142,13 +142,23 @@ public abstract class ConsoleParser {
 		stringToParse = stringToParse.toLowerCase();
 		if (stringToParse.contains(" "+Constants._testCommandKeyword+" ")) {
 			return stringToParse.split(" "+Constants._testCommandKeyword+" ", 2);
-		} else if (stringToParse.contains(" "+Constants._testCommandKeyword+" ")) {
+		} else if (stringToParse.contains(" "+Constants._testCommandKeywordShort+" ")) {
 			return stringToParse.split(" "+Constants._testCommandKeywordShort+" ", 2);
 		}
 		return null;
 	}
 	
+	/**
+	 * 
+	 * @param substrings
+	 * @return
+	 * @throws ParseException
+	 * @throws IllegalArgumentException if substrings length != 2
+	 */
 	public static TestMessage parseTest(String[] substrings) throws ParseException {
+		if (substrings.length != 2) {
+			throw new IllegalArgumentException("substrings[] length must be 2");
+		}
 		return new TestMessage(DiceExpressionParser.parse(substrings[0]),
 				DiceExpressionParser.parse(substrings[1]));
 	}
