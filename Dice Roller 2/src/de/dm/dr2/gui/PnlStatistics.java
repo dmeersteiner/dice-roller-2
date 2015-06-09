@@ -42,7 +42,7 @@ import de.dm.dr2.data.consolemessages.ErrorMessage;
 import de.dm.dr2.data.consolemessages.StatisticsMessage;
 import de.dm.dr2.data.util.Constants;
 import de.dm.dr2.data.util.UtilFunction;
-import de.dm.dr2.main.Main;
+import de.dm.dr2.main.DiceRoller2;
 
 import javax.swing.SwingConstants;
 
@@ -194,7 +194,7 @@ public class PnlStatistics extends JPanel {
 	
 	private void generateStatistics() {
 		try {
-			StatisticsMessage msg = Main.getStatMessageOf(txtTimes.getText(), txtSides.getText());
+			StatisticsMessage msg = DiceRoller2.getStatMessageOf(txtTimes.getText(), txtSides.getText());
 			appendToConsoles(msg);
 		} catch (Exception e) {
 			ErrorMessage msg = new ErrorMessage(txtTimes.getText()+Constants._standardDiceDivider+txtSides.getText(), e);

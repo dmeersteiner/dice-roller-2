@@ -34,7 +34,7 @@ import java.util.regex.Pattern;
 import de.dm.dr2.data.diceexpressions.*;
 import de.dm.dr2.data.util.Constants;
 import de.dm.dr2.data.xml.SavedDiceRoll;
-import de.dm.dr2.main.Root;
+import de.dm.dr2.main.DiceRoller2;
 
 /**
  * The {@code DiceExpressionParser} is the main parser
@@ -1022,13 +1022,13 @@ public abstract class DiceExpressionParser {
 	
 	/**
 	 * Checks if a {@code String} is equal to the name of a Registered Expression,
-	 * as determined by being in {@link Root#_registeredExpressions}.
+	 * as determined by being in {@link DiceRoller2#REGISTERED_EXPRESSIONS}.
 	 * @param stringToParse the string to test for a Registered Expression
 	 * @return a {@code DiceExpression} or {@code null} if the string doesn't match  
 	 * @see DiceExpression
 	 */
 	protected static DiceExpression parseRegisteredExpression(String stringToParse) throws ParseException {
-		SavedDiceRoll registered = Root._registeredExpressions.get(stringToParse);
+		SavedDiceRoll registered = DiceRoller2.REGISTERED_EXPRESSIONS.get(stringToParse);
 		if (registered != null) {
 			return parse(registered.expression);
 		}

@@ -25,7 +25,7 @@ import de.dm.dr2.data.consolemessages.*;
 import de.dm.dr2.data.util.Constants;
 import de.dm.dr2.data.util.UtilFunction;
 import de.dm.dr2.data.xml.SavedDiceRoll;
-import de.dm.dr2.main.Root;
+import de.dm.dr2.main.DiceRoller2;
 
 /**
  * The {@code ConsoleParser} is a parser
@@ -278,7 +278,7 @@ public abstract class ConsoleParser {
 			SavedDiceRoll save = new SavedDiceRoll();
 			save.expression = expression.trim();
 			save.name = name.trim();
-			Root.register(save);
+			DiceRoller2.register(save);
 			return "'"+save.expression+"' as '"+save.name+"'";
 		} catch (ParseException e) {
 			return errorMessage+" - expression was faulty";
@@ -314,7 +314,7 @@ public abstract class ConsoleParser {
 	 * process
 	 */
 	private static String unregisterExpressionOrReturnErrorMessage(String name) {		
-		if (Root.unregister(name)) {
+		if (DiceRoller2.unregister(name)) {
 			return "'"+name+"' unregistered";
 		} else {
 			return "unable to unregister '"+name+"' - it did not exist";
@@ -327,7 +327,7 @@ public abstract class ConsoleParser {
 	 * @return a {@code RegisterMessage} that lists all registered Expressions
 	 */
 	public static RegisterMessage listRegistered() {
-		ArrayList<SavedDiceRoll> regs = new ArrayList<SavedDiceRoll>(Root._registeredExpressions.values());
+		ArrayList<SavedDiceRoll> regs = new ArrayList<SavedDiceRoll>(DiceRoller2.REGISTERED_EXPRESSIONS.values());
 		Collections.sort(regs);
 		String[] messages = new String[regs.size()];
 		for (int i = 0; i < regs.size(); ++i) {

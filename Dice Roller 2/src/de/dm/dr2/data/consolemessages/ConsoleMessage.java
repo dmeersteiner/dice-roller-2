@@ -34,7 +34,7 @@ package de.dm.dr2.data.consolemessages;
  * by the user.
  * 
  * @author D. Meersteiner
- * @see de.dm.dr2.main.Main
+ * @see de.dm.dr2.main.DiceRoller2
  */
 public abstract class ConsoleMessage {
 	

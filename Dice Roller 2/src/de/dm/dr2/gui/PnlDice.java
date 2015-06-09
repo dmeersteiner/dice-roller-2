@@ -36,7 +36,7 @@ import javax.swing.JTextPane;
 import javax.swing.JButton;
 
 import de.dm.dr2.data.util.UtilFunction;
-import de.dm.dr2.main.Main;
+import de.dm.dr2.main.DiceRoller2;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -70,7 +70,7 @@ public class PnlDice extends JPanel {
 		btn1d4.setMnemonic(KeyEvent.VK_4);
 		btn1d4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				UtilFunction.appendToText(tpConsole, Main.getRollOf(1, 4));
+				UtilFunction.appendToText(tpConsole, DiceRoller2.getRollOf(1, 4));
 			}
 		});
 		pnlDice.add(btn1d4);
@@ -80,7 +80,7 @@ public class PnlDice extends JPanel {
 		btn1d6.setMnemonic(KeyEvent.VK_6);
 		btn1d6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				UtilFunction.appendToText(tpConsole, Main.getRollOf(1, 6));
+				UtilFunction.appendToText(tpConsole, DiceRoller2.getRollOf(1, 6));
 			}
 		});
 		pnlDice.add(btn1d6);
@@ -89,7 +89,7 @@ public class PnlDice extends JPanel {
 		btn2d6.setIcon(new ImageIcon(PnlDice.class.getResource("/de/dm/dr2/images/icon2D6_64.png")));
 		btn2d6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				UtilFunction.appendToText(tpConsole, Main.getRollOf(2, 6));
+				UtilFunction.appendToText(tpConsole, DiceRoller2.getRollOf(2, 6));
 			}
 		});
 		pnlDice.add(btn2d6);
@@ -99,7 +99,7 @@ public class PnlDice extends JPanel {
 		btn1d8.setMnemonic(KeyEvent.VK_8);
 		btn1d8.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				UtilFunction.appendToText(tpConsole, Main.getRollOf(1, 8));
+				UtilFunction.appendToText(tpConsole, DiceRoller2.getRollOf(1, 8));
 			}
 		});
 		pnlDice.add(btn1d8);
@@ -108,7 +108,7 @@ public class PnlDice extends JPanel {
 		btn1d10.setIcon(new ImageIcon(PnlDice.class.getResource("/de/dm/dr2/images/iconD10_64.png")));
 		btn1d10.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				UtilFunction.appendToText(tpConsole, Main.getRollOf(1, 10));
+				UtilFunction.appendToText(tpConsole, DiceRoller2.getRollOf(1, 10));
 			}
 		});
 		pnlDice.add(btn1d10);
@@ -117,7 +117,7 @@ public class PnlDice extends JPanel {
 		btn1d12.setIcon(new ImageIcon(PnlDice.class.getResource("/de/dm/dr2/images/iconD12_64.png")));
 		btn1d12.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				UtilFunction.appendToText(tpConsole, Main.getRollOf(1, 12));
+				UtilFunction.appendToText(tpConsole, DiceRoller2.getRollOf(1, 12));
 			}
 		});
 		pnlDice.add(btn1d12);
@@ -126,7 +126,7 @@ public class PnlDice extends JPanel {
 		btn1d20.setIcon(new ImageIcon(PnlDice.class.getResource("/de/dm/dr2/images/iconD20_64.png")));
 		btn1d20.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				UtilFunction.appendToText(tpConsole, Main.getRollOf(1, 20));
+				UtilFunction.appendToText(tpConsole, DiceRoller2.getRollOf(1, 20));
 			}
 		});
 		pnlDice.add(btn1d20);
@@ -135,7 +135,7 @@ public class PnlDice extends JPanel {
 		btn1d100.setIcon(new ImageIcon(PnlDice.class.getResource("/de/dm/dr2/images/icon2D10_64.png")));
 		btn1d100.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				UtilFunction.appendToText(tpConsole, Main.getRollOf(1, 100));
+				UtilFunction.appendToText(tpConsole, DiceRoller2.getRollOf(1, 100));
 			}
 		});
 		pnlDice.add(btn1d100);

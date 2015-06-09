@@ -35,8 +35,9 @@ import java.awt.BorderLayout;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JScrollPane;
 
+import de.dm.dr2.data.parser.ConsoleParser;
 import de.dm.dr2.data.util.UtilFunction;
-import de.dm.dr2.main.Main;
+import de.dm.dr2.main.DiceRoller2;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -47,11 +48,14 @@ import java.awt.event.MouseEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
+/**
+ * A Swing {@code JPanel} that implements a user friendly interface for
+ * using the console commands of DR2.
+ * @author dmeerste
+ * @see ConsoleParser
+ */
 public class PnlConsole extends JPanel {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -3854654738304667095L;
 	private JTextPane tpConsole;
 	private JTextField txtInput;
@@ -64,7 +68,7 @@ public class PnlConsole extends JPanel {
 	private boolean inputDoubleClickAccessEnabled = false;
 	
 	/**
-	 * Creates a new 
+	 * Creates a new PnlConsole
 	 */
 	public PnlConsole() {
 		addFocusListener(new FocusAdapter() {
@@ -106,11 +110,20 @@ public class PnlConsole extends JPanel {
 		scrollPane.setViewportView(tpConsole);
 	}
 	
-	private void requestInputFocus() {
+	/**
+	 * Requests focus for the input field and sets
+	 * the caret to its end.
+	 * @see JTextField#requestFocusInWindow()
+	 */
+	public void requestInputFocus() {
 		txtInput.requestFocusInWindow();
 		txtInput.setCaretPosition(txtInput.getDocument().getLength());
 	}
 	
+	/**
+	 * the detection method for the KeyListener of the input field
+	 * @param evt
+	 */
 	private void detectInput(KeyEvent evt) {
 		switch (evt.getExtendedKeyCode()) {
 		
@@ -152,7 +165,7 @@ public class PnlConsole extends JPanel {
 	
 	private void doCommandEntered(String s) {
 		addToList(s);
-		UtilFunction.appendToText(tpConsole, Main.parseCommand(s));
+		UtilFunction.appendToText(tpConsole, DiceRoller2.parseCommand(s));
 		setTxt(null);
 	}
 	
@@ -175,6 +188,7 @@ public class PnlConsole extends JPanel {
 	}
 
 	/**
+	 * 
 	 * @return the inputDoubleClickAccessEnabled
 	 */
 	public boolean isInputDoubleClickAccessEnabled() {
@@ -182,6 +196,8 @@ public class PnlConsole extends JPanel {
 	}
 
 	/**
+	 * If set to {@code true} the output text pane can be double clicked
+	 * to put the cursor into the input text field.
 	 * @param inputDoubleClickAccessEnabled the inputDoubleClickAccessEnabled to set
 	 */
 	public void setInputDoubleClickAccessEnabled(
@@ -190,7 +206,7 @@ public class PnlConsole extends JPanel {
 	}
 	
 	public void doLastCommand() {
-		UtilFunction.appendToText(tpConsole, Main.parseCommand(lastInputString));
+		UtilFunction.appendToText(tpConsole, DiceRoller2.parseCommand(lastInputString));
 	}
 
 }

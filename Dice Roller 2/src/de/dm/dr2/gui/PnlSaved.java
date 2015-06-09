@@ -43,8 +43,7 @@ import de.dm.dr2.data.util.UtilFunction;
 import de.dm.dr2.data.xml.SavedDiceRoll;
 import de.dm.dr2.data.xml.XMLInterface;
 import de.dm.dr2.data.xml.XmlSaveList;
-import de.dm.dr2.main.Main;
-import de.dm.dr2.main.Root;
+import de.dm.dr2.main.DiceRoller2;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -107,7 +106,7 @@ public class PnlSaved extends JPanel {
 						XmlSaveList saves = XMLInterface.loadXml(fc.getSelectedFile());
 						savedRolls.addAll(saves.getSavedDiceRolls());
 						for (SavedDiceRoll save : saves.getRegisteredDiceRolls()) {
-							Root.register(save);
+							DiceRoller2.register(save);
 						}
 					} catch (Exception ex) {
 						JOptionPane.showMessageDialog(null, "Couldn't load saved dice rolls.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -129,7 +128,7 @@ public class PnlSaved extends JPanel {
 					if (!file.getName().toLowerCase().endsWith(".xml")) {
 						file = new File(file.getAbsolutePath()+".xml");
 					}
-					XMLInterface.saveXml(savedRolls, Root._registeredExpressions.values(), file);
+					XMLInterface.saveXml(savedRolls, DiceRoller2.REGISTERED_EXPRESSIONS.values(), file);
 				}
 				
 			}
@@ -253,7 +252,7 @@ public class PnlSaved extends JPanel {
 				rollsList.setListData(savedRolls);
 				rollsList.revalidate();
 				
-				List<SavedDiceRoll> registered = new LinkedList<SavedDiceRoll>(Root._registeredExpressions.values());
+				List<SavedDiceRoll> registered = new LinkedList<SavedDiceRoll>(DiceRoller2.REGISTERED_EXPRESSIONS.values());
 				Collections.sort(registered);
 				registeredList.setListData(UtilFunction.toVector(registered));
 				registeredList.revalidate();
@@ -262,7 +261,7 @@ public class PnlSaved extends JPanel {
 	}
 	
 	private void doRoll(SavedDiceRoll roll) {
-		String message = Main.parseCommand(roll.expression);
+		String message = DiceRoller2.parseCommand(roll.expression);
 		UtilFunction.appendToText(tpConsole, message);
 	}
 	
@@ -279,7 +278,7 @@ public class PnlSaved extends JPanel {
 		if (selectedComponent == pnlSavedRolls) {
 			savedRolls.remove(roll);
 		} else if (selectedComponent == pnlRegisteredExpressions) {
-			Root.unregister(roll.name);
+			DiceRoller2.unregister(roll.name);
 		}
 	}
 	
@@ -287,25 +286,25 @@ public class PnlSaved extends JPanel {
 		if (selectedComponent == pnlSavedRolls) {
 			savedRolls.add(roll);
 		} else if (selectedComponent == pnlRegisteredExpressions) {
-			if (Root._registeredExpressions.get(roll.name) != null) {
+			if (DiceRoller2.REGISTERED_EXPRESSIONS.get(roll.name) != null) {
 				roll.name = roll.name + "copy";
 			}
-			Root.register(roll);
+			DiceRoller2.register(roll);
 		}
 	}
 	
 	private void editSaveFromActiveList(SavedDiceRoll roll) {
 		boolean registered = selectedComponent == pnlRegisteredExpressions;
 		if (registered) {
-			Root.unregister(roll.name);
+			DiceRoller2.unregister(roll.name);
 		}
 		DlgCreateSavedDiceRoll dlg = new DlgCreateSavedDiceRoll(roll);
 		dlg.setVisible(true);
 		if (registered) {
-			if (Root._registeredExpressions.get(roll.name) != null) {
+			if (DiceRoller2.REGISTERED_EXPRESSIONS.get(roll.name) != null) {
 				roll.name = roll.name + "copy";
 			}
-			Root.register(roll);
+			DiceRoller2.register(roll);
 		}
 	}
 	

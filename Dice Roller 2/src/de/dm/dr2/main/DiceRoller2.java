@@ -28,6 +28,7 @@ package de.dm.dr2.main;
 
 import java.awt.EventQueue;
 import java.io.File;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -37,6 +38,10 @@ import java.util.Map;
 
 import javax.swing.UIManager;
 
+import de.dm.dr2.data.consolemessages.*;
+import de.dm.dr2.data.diceexpressions.DiceExpression;
+import de.dm.dr2.data.diceexpressions.DiceRollExpression;
+import de.dm.dr2.data.parser.ConsoleParser;
 import de.dm.dr2.data.util.Constants;
 import de.dm.dr2.data.util.UtilFunction;
 import de.dm.dr2.data.xml.SavedDiceRoll;
@@ -44,11 +49,90 @@ import de.dm.dr2.data.xml.XMLInterface;
 import de.dm.dr2.data.xml.XmlSaveList;
 import de.dm.dr2.gui.Mainframe;
 
-public class Root {
+/**
+ * Holds static main actions used by Dice Roller 2.
+ * @author D. Meersteiner
+ *
+ */
+public class DiceRoller2 {
 
-	public static final List<Mainframe> _frames = Collections.synchronizedList(new LinkedList<Mainframe>());
-	public static final Map<String, SavedDiceRoll> _registeredExpressions = Collections.synchronizedMap(new HashMap<String, SavedDiceRoll>()); 
+	/**
+	 * A synchronized {@link LinkedList} of all instances of {@link Mainframe}
+	 * that were created. They will be removed if disposed.
+	 * @see Collections#synchronizedList(List)
+	 */
+	public static final List<Mainframe> FRAMES = 
+			Collections.synchronizedList(new LinkedList<Mainframe>());
+	/**
+	 * A synchronized {@link HashMap} of registered expressions of Dice Roller 2.
+	 * 
+	 * @see Collections#synchronizedMap(Map)
+	 */
+	public static final Map<String, SavedDiceRoll> REGISTERED_EXPRESSIONS = 
+			Collections.synchronizedMap(new HashMap<String, SavedDiceRoll>());
+
+	public static String parseCommand(String input) {
+		ConsoleMessage message = ConsoleParser.parse(input);
+		if (message != null)
+			return message.getMessage();
+		else
+			return "FATAL ERROR";
+	}
+
+	public static String getRollOf(int times, int sides) {
+		return getRollOf(getExpression(times, sides));
+	}
 	
+	public static String getRollOf(DiceExpression expression) {
+		ConsoleMessage msg = new DiceRollMessage(expression);
+		return msg.getMessage();
+	}
+	
+	public static String getStatsOf(int times, int sides) {
+		return getStatMessageOf(times, sides).getMessage();
+	}
+	
+	public static StatisticsMessage getStatMessageOf(int times, int sides) {
+		return new StatisticsMessage(getExpression(times, sides));
+	}
+	
+	public static StatisticsMessage getStatMessageOf(String times, String sides) throws ParseException {
+		String input = times+Constants._standardDiceDivider+sides;
+		return ConsoleParser.parseStats(input.toLowerCase());	
+	}
+
+	private static DiceRollExpression getExpression(int times, int sides) {
+		return new DiceRollExpression(times, sides);
+	}
+
+	/**
+	 * Registers an expression with Dice Roller 2
+	 * @param save
+	 */
+	public static void register(SavedDiceRoll save) {
+		DiceRoller2.REGISTERED_EXPRESSIONS.put(save.name.toLowerCase().trim(), save);
+	}
+
+	/**
+	 * Unegisters an expression with Dice Roller 2
+	 * @param name
+	 * @return {@code true} if a registered expression was removed
+	 */
+	public static boolean unregister(String name) {
+		return DiceRoller2.REGISTERED_EXPRESSIONS.remove(name.toLowerCase().trim()) != null;
+	}
+
+	public static void disposeAllFrames() {
+		LinkedList<Mainframe> disposeList = new LinkedList<Mainframe>(DiceRoller2.FRAMES);
+		for (final Mainframe frame : disposeList) {
+			EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					frame.dispose();
+				}
+			});
+		}
+	}
+
 	/**
 	 * Launch the application.
 	 */
@@ -95,30 +179,6 @@ public class Root {
 				}
 			}
 		});
-	}
-	
-	public static void disposeAllFrames() {
-		LinkedList<Mainframe> disposeList = new LinkedList<Mainframe>(_frames);
-		for (final Mainframe frame : disposeList) {
-			EventQueue.invokeLater(new Runnable() {
-				public void run() {
-					frame.dispose();
-				}
-			});
-		}
-	}
-	
-	public static void register(SavedDiceRoll save) {
-		_registeredExpressions.put(save.name.toLowerCase().trim(), save);
-	}
-	
-	/**
-	 * 
-	 * @param name
-	 * @return {@code true} if a registered expression was removed
-	 */
-	public static boolean unregister(String name) {
-		return _registeredExpressions.remove(name.toLowerCase().trim()) != null;
 	}
 	
 }
